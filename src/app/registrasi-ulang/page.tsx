@@ -35,18 +35,18 @@ export default function RegistrasiUlangPage() {
   return (
     <div
       style={{
-        maxWidth: 800,
-        margin: '0 auto',
         padding: '0px 24px',
         height: '100dvh',
         overflowY: 'auto',
       }}
     >
+      <div style={{display: 'flex', flexDirection: 'column', maxWidth: '800px', margin: '0 auto'}}></div>
       <Form
         layout="vertical"
         form={form}
         onFinish={handleFinish}
         autoComplete="off"
+        style={{maxWidth: '800px',     margin: '0 auto',}}
       >
         <Form.Item
           style={{
@@ -80,7 +80,6 @@ export default function RegistrasiUlangPage() {
             variant="filled"
           />
         </Form.Item>
-
         <Form.Item
           label="Tempat Lahir"
           name="tempatLahir"
@@ -95,7 +94,6 @@ export default function RegistrasiUlangPage() {
             variant="filled"
           />
         </Form.Item>
-
         <Form.Item
           label="Tanggal Lahir"
           name="tanggalLahir"
@@ -109,7 +107,6 @@ export default function RegistrasiUlangPage() {
             placeholder="Pilih Tanggal Lahir"
           />
         </Form.Item>
-
         <Form.Item
           label="Jenis Kelamin"
           name="jenisKelamin"
@@ -125,7 +122,6 @@ export default function RegistrasiUlangPage() {
             <Option value="Perempuan">Perempuan</Option>
           </Select>
         </Form.Item>
-
         <Form.Item
           label="Nomor Induk Kependudukan"
           name="nik"
@@ -144,7 +140,6 @@ export default function RegistrasiUlangPage() {
             maxLength={16}
           />
         </Form.Item>
-
         <Form.Item
           label="Nomor Kartu Keluarga"
           name="kk"
@@ -163,7 +158,6 @@ export default function RegistrasiUlangPage() {
             maxLength={16}
           />
         </Form.Item>
-
         {[
           { label: 'Scan Ijazah', name: 'ijazahTk' },
           { label: 'Scan Akte Kelahiran', name: 'akte' },

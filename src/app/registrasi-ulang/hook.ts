@@ -2,10 +2,12 @@
 import { Form, Upload, message } from 'antd';
 import { useCallback, useState } from 'react';
 import { FormValue } from './types';
+import { useRouter } from 'next/router';
 
 export function useRegistrasiUlangHook() {
   const [form] = Form.useForm();
   const [agreed, setAgreed] = useState(false);
+  const router = useRouter();
 
   const handleFormData = useCallback((values: FormValue) => {
     const form = new FormData();
@@ -42,6 +44,7 @@ export function useRegistrasiUlangHook() {
           throw new Error('Gagal mengirim data, silakan coba lagi.');
         } else {
           message.success('Data berhasil dikirim!');
+          router.push('/registrasi-ulang-complete');
         }
       } catch (error) {
         message.error((error as Error).message);

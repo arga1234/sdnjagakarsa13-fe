@@ -1,12 +1,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --input-background: #8b8b8b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --input-background: #262626;
   }
 }
 

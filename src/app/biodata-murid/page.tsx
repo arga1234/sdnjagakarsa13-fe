@@ -13,12 +13,8 @@ import { FieldValidationRule } from './types';
 import { useRegistrasiUlangHook } from './hook';
 
 export default function Page() {
-  const {
-    agreed,
-    setAgreed,
-    validationRules,
-    handleSubmitForm,
-  } = useRegistrasiUlangHook()
+  const { agreed, setAgreed, validationRules, handleSubmitForm } =
+    useRegistrasiUlangHook();
 
   return (
     <div

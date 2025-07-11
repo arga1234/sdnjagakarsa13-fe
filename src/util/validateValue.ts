@@ -7,11 +7,12 @@ export interface ValidationRule {
 }
 
 export function validateValue(
-  value: string | File | null | undefined,
+  value: string | File | File[] | null | undefined,
   rules: ValidationRule[],
 ): string | null {
   for (const rule of rules) {
     const isFile = value instanceof File;
+    const isFileArray = Array.isArray(value) && value[0] instanceof File;
 
     // 1. Required
     if (rule.required) {
@@ -19,14 +20,15 @@ export function validateValue(
         value === null ||
         value === undefined ||
         (typeof value === 'string' && value.trim() === '') ||
-        (isFile && !value.name)
+        (isFile && !value.name) ||
+        (isFileArray && value.length === 0)
       ) {
         return rule.message || 'Field ini wajib diisi';
       }
     }
 
     if (typeof value === 'string') {
-      // 2. Pattern (hanya berlaku untuk string)
+      // 2. Pattern (untuk string saja)
       if (rule.pattern && !rule.pattern.test(value)) {
         return rule.message || 'Format tidak valid';
       }
@@ -45,3 +47,4 @@ export function validateValue(
 
   return null;
 }
+

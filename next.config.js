@@ -9,6 +9,15 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com',
+        pathname: '/uc**', // atau '/file/**'
+      },
+    ],
+  },
   // ...opsi lain
 };
 

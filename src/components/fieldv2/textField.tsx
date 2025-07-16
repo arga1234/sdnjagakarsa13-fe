@@ -8,6 +8,7 @@ interface TextFieldProps {
   type?: string;
   icon?: React.ReactNode;
   rules?: ValidationRule[];
+  onChange?: (value: string) => void;
 }
 
 export function TextField({
@@ -17,6 +18,7 @@ export function TextField({
   type = 'text',
   icon,
   rules = [],
+  onChange
 }: TextFieldProps) {
   const [error, setError] = useState<string | null>(null);
 
@@ -74,7 +76,12 @@ export function TextField({
           name={name}
           type={type}
           placeholder={placeholder}
-          onChange={handleOnChange}
+          onChange={(e) => {
+            handleOnChange(e)
+            if (onChange) {
+              onChange(e.target.value); 
+            }
+          }}
           onBlur={handleBlur}
           maxLength={maxLength}
           style={{

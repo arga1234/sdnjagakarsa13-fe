@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 55321",
     "build": "next build",
     "start": "next start -p 55321",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "antd": "^5.26.2",
+    "mammoth": "^1.9.1",
     "next": "^13.5.4",
+    "pdf-parse": "^1.1.1",
+    "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.34.2"
@@ -19,6 +22,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/qrcode.react": "^1.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.35.0",

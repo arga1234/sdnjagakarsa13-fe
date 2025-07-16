@@ -5,7 +5,12 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function InformasiBangkuKosongPage() {
-  const bangku: {kelas: string; kosong: number; total: number;  isInconfirmation?: boolean}[] = [
+  const bangku: {
+    kelas: string;
+    kosong: number;
+    total: number;
+    isInconfirmation?: boolean;
+  }[] = [
     { kelas: 'Kelas 1️⃣', kosong: 0, total: 64 },
     { kelas: 'Kelas 2️⃣', kosong: 1, total: 32 },
     { kelas: 'Kelas 3️⃣', kosong: 2, total: 64 },
@@ -15,46 +20,63 @@ export default function InformasiBangkuKosongPage() {
   ];
 
   const warnaCard = [
-    '#ffe0e9', '#d0f4de', '#e0f7fa', '#fff5ba', '#e8eaf6', '#f3e5f5'
+    '#ffe0e9',
+    '#d0f4de',
+    '#e0f7fa',
+    '#fff5ba',
+    '#e8eaf6',
+    '#f3e5f5',
   ];
 
-    const [isReady, setIsReady] = useState(false);
-  
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setIsReady(true);
-      }, 300);
-      return () => clearTimeout(timeout);
-    }, []);
-  
-    if (!isReady) {
-      return (
-        <LoadingComponent />
-      );
-    }
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsReady(true);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (!isReady) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="page">
       <h1 className="title">🪑 Info Bangku Kosong</h1>
-      <p className="subtitle">🎒 SDN Jagakarsa 13 Pagi – Tahun Ajaran Baru 📚</p>
+      <p className="subtitle">
+        🎒 SDN Jagakarsa 13 Pagi – Tahun Ajaran Baru 📚
+      </p>
 
       <div className="card-list">
         {bangku.map((item, idx) => {
           const penuh = item.kosong === 0;
           const onConfirmation = item?.isInconfirmation;
-          const statusEmoji = onConfirmation ? 'Sedang Dikonfirmasi 🙏' : penuh ? '❌ Penuh 😢' : '✅ Tersedia 🎉';
+          const statusEmoji = onConfirmation
+            ? 'Sedang Dikonfirmasi 🙏'
+            : penuh
+              ? '❌ Penuh 😢'
+              : '✅ Tersedia 🎉';
           const statusBg = penuh ? '#ff4d4f' : '#52c41a';
           const bg = warnaCard[idx % warnaCard.length];
 
           return (
-            <div className="card fade-in" key={idx} style={{ backgroundColor: bg, animationDelay: `${idx * 0.2}s` }}>
+            <div
+              className="card fade-in"
+              key={idx}
+              style={{ backgroundColor: bg, animationDelay: `${idx * 0.2}s` }}
+            >
               <div className="emoji">{item.kelas}</div>
               <div className="content">
-                <div className="info-line">💺 <strong>Total Kursi:</strong> {item.total}</div>
                 <div className="info-line">
-                  {onConfirmation ? 'Mohon menunggu 🫶' : penuh
-                    ? '🚫 Tidak ada kursi kosong'
-                    : `🟢 Kursi kosong: ${item.kosong}`}
+                  💺 <strong>Total Kursi:</strong> {item.total}
+                </div>
+                <div className="info-line">
+                  {onConfirmation
+                    ? 'Mohon menunggu 🫶'
+                    : penuh
+                      ? '🚫 Tidak ada kursi kosong'
+                      : `🟢 Kursi kosong: ${item.kosong}`}
                 </div>
               </div>
               <div className="status" style={{ backgroundColor: statusBg }}>
@@ -62,7 +84,7 @@ export default function InformasiBangkuKosongPage() {
               </div>
               {!penuh && (
                 <Link href="/registrasi-peserta-mutasi">
-                <button className="cta-btn">📝 Daftar Sekarang</button>
+                  <button className="cta-btn">📝 Daftar Sekarang</button>
                 </Link>
               )}
             </div>
@@ -72,9 +94,15 @@ export default function InformasiBangkuKosongPage() {
 
       <style jsx>{`
         @keyframes bgShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
 
         @keyframes fadeSlideUp {
@@ -91,7 +119,13 @@ export default function InformasiBangkuKosongPage() {
         .page {
           min-height: 100vh;
           padding: 2rem 1rem;
-          background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+          background: linear-gradient(
+            -45deg,
+            #ff9a9e,
+            #fad0c4,
+            #a1c4fd,
+            #c2e9fb
+          );
           background-size: 400% 400%;
           animation: bgShift 15s ease infinite;
           display: flex;
@@ -132,7 +166,9 @@ export default function InformasiBangkuKosongPage() {
           align-items: center;
           animation: fadeSlideUp 0.6s ease forwards;
           opacity: 0;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
         }
 
         .card:hover {
@@ -165,7 +201,7 @@ export default function InformasiBangkuKosongPage() {
           color: white;
           border-radius: 999px;
           margin-bottom: 1rem;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .cta-btn {
@@ -177,7 +213,7 @@ export default function InformasiBangkuKosongPage() {
           font-size: 1rem;
           cursor: pointer;
           transition: background 0.3s ease;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .cta-btn:hover {

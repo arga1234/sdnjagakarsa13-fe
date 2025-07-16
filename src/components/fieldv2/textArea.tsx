@@ -1,39 +1,41 @@
 import React, { useCallback, useState } from 'react';
 import { validateValue, ValidationRule } from '@/src/util';
 
-interface TextFieldProps {
+interface TextAreaFieldProps {
   label: string;
   placeholder?: string;
   name: string;
-  type?: string;
   icon?: React.ReactNode;
   rules?: ValidationRule[];
+  rows?: number;
+  scale?: number;
 }
 
-export function TextField({
+export function TextAreaField({
   label,
   placeholder,
   name,
-  type = 'text',
   icon,
   rules = [],
-}: TextFieldProps) {
+  rows = 4,
+  scale = 1,
+}: TextAreaFieldProps) {
   const [error, setError] = useState<string | null>(null);
 
   const validate = useCallback(
     (value: string) => {
       const error = validateValue(value, rules);
       setError(error);
-      return error ? false : true;
+      return !error;
     },
     [rules],
   );
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     validate(e.target.value);
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     validate(e.target.value);
   };
 
@@ -42,13 +44,14 @@ export function TextField({
   const maxLength = maxLengthRule?.maxLength;
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
+    <div style={{ marginBottom: `${scale * 16}px` }}>
       <label
         htmlFor={name}
         style={{
           display: 'block',
-          marginBottom: '0.5rem',
+          marginBottom: `${scale * 8}px`,
           fontWeight: 'bold',
+          fontSize: `${14 * scale}px`,
         }}
       >
         {isRequired && (
@@ -60,36 +63,53 @@ export function TextField({
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           backgroundColor: 'white',
-          borderRadius: '5px',
-          padding: '10px',
+          borderRadius: `${5 * scale}px`,
+          padding: `${10 * scale}px`,
+          border: '1px solid #ccc',
         }}
       >
         {icon && (
-          <span style={{ marginRight: '10px', fontSize: '18px' }}>{icon}</span>
+          <span
+            style={{
+              marginRight: `${10 * scale}px`,
+              fontSize: `${18 * scale}px`,
+              paddingTop: `${4 * scale}px`,
+            }}
+          >
+            {icon}
+          </span>
         )}
-        <input
+        <textarea
           id={name}
           name={name}
-          type={type}
+          rows={rows}
           placeholder={placeholder}
-          onChange={handleOnChange}
+          onChange={handleChange}
           onBlur={handleBlur}
           maxLength={maxLength}
           style={{
             flex: 1,
+            width: '100%',
             border: 'none',
-            fontSize: '16px',
+            fontSize: `${16 * scale}px`,
             outline: 'none',
             backgroundColor: 'transparent',
             color: 'grey',
+            resize: 'vertical',
           }}
         />
       </div>
 
       {error && (
-        <div style={{ color: 'red', fontSize: '13px', marginTop: '5px' }}>
+        <div
+          style={{
+            color: 'red',
+            fontSize: `${12 * scale}px`,
+            marginTop: `${5 * scale}px`,
+          }}
+        >
           {error}
         </div>
       )}

@@ -11,8 +11,12 @@ import { useAbsensiOnlineHook } from './hook';
 import { LoadingComponent } from '@/src/components';
 
 export default function AbsensiOnlinePage() {
-  const { agreed, setAgreed, validationRules, handleSubmitForm: originalSubmit } =
-    useAbsensiOnlineHook();
+  const {
+    agreed,
+    setAgreed,
+    validationRules,
+    handleSubmitForm: originalSubmit,
+  } = useAbsensiOnlineHook();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -37,7 +41,9 @@ export default function AbsensiOnlinePage() {
   return (
     <div className="page">
       <div className="header">
-        <h2><b>✨ Absensi Kelas 1 ✨</b></h2>
+        <h2>
+          <b>✨ Absensi Kelas 1 ✨</b>
+        </h2>
         <p>📍 SD Negeri Jagakarsa 13 Pagi 📍</p>
       </div>
 
@@ -123,15 +129,28 @@ export default function AbsensiOnlinePage() {
 
       <style jsx>{`
         @keyframes bgShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
 
         .page {
           color: #333;
           min-height: 100vh;
-          background: linear-gradient(270deg, #fbc2eb, #a6c1ee, #fad0c4, #fcb69f, #ffecd2);
+          background: linear-gradient(
+            270deg,
+            #fbc2eb,
+            #a6c1ee,
+            #fad0c4,
+            #fcb69f,
+            #ffecd2
+          );
           background-size: 1000% 1000%;
           animation: bgShift 30s ease infinite;
           padding: 20px;

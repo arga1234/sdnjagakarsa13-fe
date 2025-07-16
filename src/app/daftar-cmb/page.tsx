@@ -58,10 +58,10 @@ export default function App() {
         limit={pagination.limit}
         total={pagination.total}
         onPageChange={function (page: number): void {
-            setPagination((prev) => ({ ...prev, currentPage: page }));
+          setPagination((prev) => ({ ...prev, currentPage: page }));
         }}
         onLimitChange={function (limit: number): void {
-            setPagination((prev) => ({ ...prev, limit }));
+          setPagination((prev) => ({ ...prev, limit }));
         }}
       />
     </div>

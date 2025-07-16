@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState } from 'react';
 import { ValidationRule, validateValue } from '@/src/util';
 
@@ -7,6 +8,9 @@ interface SelectFieldProps {
   options?: { value: string; label: string }[];
   icon?: React.ReactNode;
   rules?: ValidationRule[];
+  onChange?: (value: any) => void;
+  placeholder?: string;
+  customMarginBottom?: string;
 }
 
 export function SelectField({
@@ -15,6 +19,9 @@ export function SelectField({
   options = [],
   icon,
   rules = [],
+  placeholder,
+  customMarginBottom,
+  onChange,
 }: SelectFieldProps) {
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +41,9 @@ export function SelectField({
   const isRequired = rules.some((r) => r.required);
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
+    <div
+      style={{ marginBottom: customMarginBottom ? customMarginBottom : '1rem' }}
+    >
       <label
         htmlFor={name}
         style={{
@@ -67,6 +76,7 @@ export function SelectField({
           id={name}
           name={name}
           onBlur={handleBlur}
+          onChange={onChange}
           style={{
             color: 'grey',
             flex: 1,
@@ -84,7 +94,7 @@ export function SelectField({
             backgroundSize: '12px',
           }}
         >
-          <option value="">Pilih salah satu</option>
+          <option value=""> {placeholder || 'Pilih salah satu'}</option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
               {opt.label}

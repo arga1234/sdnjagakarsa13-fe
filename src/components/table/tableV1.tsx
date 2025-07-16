@@ -36,12 +36,19 @@ const Table: React.FC<{
 }> = ({ columns, data, onSortChange, sortState }) => {
   const toggleSort = (key: string) => {
     if (!onSortChange) return;
-    const direction = sortState?.key === key && sortState.direction === 'asc' ? 'desc' : 'asc';
+    const direction =
+      sortState?.key === key && sortState.direction === 'asc' ? 'desc' : 'asc';
     onSortChange(key, direction);
   };
 
   return (
-    <div style={{ overflowX: 'auto', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>
+    <div
+      style={{
+        overflowX: 'auto',
+        borderRadius: '8px',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+      }}
+    >
       <table
         style={{
           borderCollapse: 'collapse',
@@ -55,12 +62,17 @@ const Table: React.FC<{
             {columns.map((col) => (
               <th
                 key={col.key}
-                style={{ ...thStyle, cursor: col.sortable ? 'pointer' : 'default' }}
+                style={{
+                  ...thStyle,
+                  cursor: col.sortable ? 'pointer' : 'default',
+                }}
                 onClick={() => col.sortable && toggleSort(col.key)}
               >
                 {col.title}
                 {col.sortable && sortState?.key === col.key && (
-                  <span style={{ marginLeft: '6px' }}>{sortState.direction === 'asc' ? '▲' : '▼'}</span>
+                  <span style={{ marginLeft: '6px' }}>
+                    {sortState.direction === 'asc' ? '▲' : '▼'}
+                  </span>
                 )}
               </th>
             ))}
@@ -73,7 +85,9 @@ const Table: React.FC<{
                 key={idx}
                 style={{
                   backgroundColor:
-                    idx % 2 === 0 ? 'var(--background)' : 'var(--background-secondary)',
+                    idx % 2 === 0
+                      ? 'var(--background)'
+                      : 'var(--background-secondary)',
                 }}
               >
                 {columns.map((col) => (
@@ -161,7 +175,12 @@ export function ResponsiveTable({
 
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
-      <Table columns={columns} data={data} onSortChange={onSortChange} sortState={sortState} />
+      <Table
+        columns={columns}
+        data={data}
+        onSortChange={onSortChange}
+        sortState={sortState}
+      />
       <TableFooter
         currentPage={currentPage}
         totalPage={totalPage}

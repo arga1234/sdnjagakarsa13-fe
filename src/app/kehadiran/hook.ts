@@ -10,17 +10,23 @@ export function useAbsensiOnlineHook() {
   const validationRules: any = useMemo(
     () => ({
       namaAnak: [{ required: true, message: 'Nama lengkap anak wajib diisi' }],
-      namaOrtu: [{ required: true, message: 'Nama orang tua/wali wajib diisi' }],
+      namaOrtu: [
+        { required: true, message: 'Nama orang tua/wali wajib diisi' },
+      ],
       noHp: [
         { required: true, message: 'Nomor HP wajib diisi' },
         { pattern: /^\d+$/, message: 'Nomor HP hanya boleh angka' },
       ],
       statusGrup: [{ required: true, message: 'Status grup wajib dipilih' }],
-      tanggalAbsensi: [{ required: true, message: 'Tanggal absensi wajib diisi' }],
-      statusHadir: [{ required: true, message: 'Status kehadiran wajib dipilih' }],
+      tanggalAbsensi: [
+        { required: true, message: 'Tanggal absensi wajib diisi' },
+      ],
+      statusHadir: [
+        { required: true, message: 'Status kehadiran wajib dipilih' },
+      ],
       // Keterangan tidak wajib, jadi tidak divalidasi
     }),
-    []
+    [],
   );
 
   const handleSubmitForm = useCallback(
@@ -51,7 +57,7 @@ export function useAbsensiOnlineHook() {
       if (Object.keys(newErrors).length > 0) {
         alert(
           'Ada kesalahan dalam pengisian form:\n' +
-            Object.values(newErrors).join('\n')
+            Object.values(newErrors).join('\n'),
         );
         return;
       }
@@ -71,7 +77,7 @@ export function useAbsensiOnlineHook() {
         alert((error as Error).message);
       }
     },
-    [router, validationRules]
+    [router, validationRules],
   );
 
   return {

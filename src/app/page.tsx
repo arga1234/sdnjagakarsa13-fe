@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import {LoadingComponent} from '../components';
+import { LoadingComponent } from '../components';
 
 export default function HomePage() {
   const [isReady, setIsReady] = useState(false);
@@ -16,9 +16,7 @@ export default function HomePage() {
   }, []);
 
   if (!isReady) {
-    return (
-      <LoadingComponent />
-    );
+    return <LoadingComponent />;
   }
 
   return (
@@ -39,33 +37,61 @@ export default function HomePage() {
         <Link href="/informasi-mutasi">
           <button className="btn info">📆 Jadwal Mutasi</button>
         </Link>
-        
+
         <Link href="/bangku-kosong">
           <button className="btn register">🪑 Bangku Kosong</button>
         </Link>
 
-        <Link href="/registrasi-peserta-mutasi">
-          <button className="btn register">🌟 Registrasi/Daftar Sekarang</button>
+        <Link href="/kisi-kisi">
+          <button className="btn register">🌟Kisi-kisi Ujian</button>
         </Link>
-        <a href="https://edu.jakarta.go.id/perpindahan-murid/" target='_blank' rel="noopener noreferrer">
+
+        <Link href="/registrasi-peserta-mutasi">
+          <button className="btn register">
+            🌟 Registrasi/Daftar Sekarang
+          </button>
+        </Link>
+        <a
+          href="https://edu.jakarta.go.id/perpindahan-murid/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="btn info">📚 Bangku Kosong Se DKI Jakarta</button>
         </a>
-        <a href="https://drive.google.com/uc?export=view&id=1c1HwSQGk2h3fthRHWvAxBYE94sMPObuv" target="_blank" rel="noopener noreferrer">
-          <button className='btn register'>🎯 Poster Resmi</button>
+        <a
+          href="https://drive.google.com/uc?export=view&id=1c1HwSQGk2h3fthRHWvAxBYE94sMPObuv"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="btn register">🎯 Poster Resmi</button>
         </a>
-        <a href="https://chat.whatsapp.com/JB5Qiwb8vAALa1cO1vaHiq" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://chat.whatsapp.com/JB5Qiwb8vAALa1cO1vaHiq"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="btn whatsapp">💬 Grup WhatsApp</button>
         </a>
-        <a href="https://wa.me/6289524801052" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://wa.me/6289524801052"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="btn whatsapp">💬 Hubungi Admin</button>
         </a>
       </div>
 
       <style jsx>{`
         @keyframes backgroundShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
 
         .container {
@@ -75,7 +101,13 @@ export default function HomePage() {
           justify-content: center;
           min-height: 100vh;
           padding: 1rem;
-          background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+          background: linear-gradient(
+            -45deg,
+            #ff9a9e,
+            #fad0c4,
+            #a1c4fd,
+            #c2e9fb
+          );
           background-size: 400% 400%;
           animation: backgroundShift 16s ease infinite;
         }
@@ -86,7 +118,7 @@ export default function HomePage() {
 
         .logo {
           border-radius: 50%;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
           transition: transform 0.4s ease;
         }
 
@@ -99,13 +131,13 @@ export default function HomePage() {
           text-align: center;
           color: white;
           margin-bottom: 0.3rem;
-          text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+          text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         .subtitle {
           font-size: 1.2rem;
           color: #fff;
-          text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+          text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
           margin-bottom: 2rem;
         }
 
@@ -123,13 +155,15 @@ export default function HomePage() {
           border: none;
           border-radius: 2rem;
           cursor: pointer;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .btn:hover {
           transform: scale(1.1);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .btn.info {

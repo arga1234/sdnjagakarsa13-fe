@@ -13,13 +13,17 @@ import { useRegistrasiMutasiHook } from './hook';
 import { LoadingComponent } from '@/src/components';
 
 export default function RegistrasiPesertaMutasiPage() {
-  const { agreed, setAgreed, validationRules, handleSubmitForm: originalSubmit } =
-    useRegistrasiMutasiHook();
+  const {
+    agreed,
+    setAgreed,
+    validationRules,
+    handleSubmitForm: originalSubmit,
+  } = useRegistrasiMutasiHook();
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [isReady, setIsReady] = useState(false);
-  
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsReady(true);
@@ -38,15 +42,15 @@ export default function RegistrasiPesertaMutasiPage() {
   };
 
   if (!isReady) {
-    return (
-      <LoadingComponent />
-    );
+    return <LoadingComponent />;
   }
 
   return (
     <div className="page">
       <div className="header">
-        <h2>📝 <b>Formulir Pendaftaran Mutasi</b></h2>
+        <h2>
+          📝 <b>Formulir Pendaftaran Mutasi</b>
+        </h2>
         <p>📍 SD Negeri Jagakarsa 13 Pagi</p>
       </div>
 
@@ -114,7 +118,11 @@ export default function RegistrasiPesertaMutasiPage() {
           rules={validationRules.whatsapp}
         />
         {[
-          { label: '📘 File PDF Rapor Terakhir', name: 'rapor', isMultiple: true },
+          {
+            label: '📘 File PDF Rapor Terakhir',
+            name: 'rapor',
+            isMultiple: true,
+          },
           { label: '👨‍👩‍👧 Foto/Scan Kartu Keluarga', name: 'kartuKeluarga' },
           { label: '📷 Pas Foto Berwarna', name: 'pasFoto' },
         ].map((field, i) => (
@@ -151,15 +159,27 @@ export default function RegistrasiPesertaMutasiPage() {
 
       <style jsx>{`
         @keyframes bgShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
 
         .page {
           color: #555;
           min-height: 100vh;
-          background: linear-gradient(120deg, #fbc2eb, #a6c1ee, #fad0c4, #fcb69f);
+          background: linear-gradient(
+            120deg,
+            #fbc2eb,
+            #a6c1ee,
+            #fad0c4,
+            #fcb69f
+          );
           background-size: 400% 400%;
           animation: bgShift 16s ease infinite;
           padding: 10px 24px;

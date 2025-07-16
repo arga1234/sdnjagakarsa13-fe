@@ -1,45 +1,30 @@
 'use client';
 
 import { LoadingComponent } from '@/src/components';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
-export default function InformasiJadwalPage() {
-  const jadwal = [
+export default function KisiKisiUjianPage() {
+  const kisiKisi = [
     {
-      tanggal: '9–11 Juli',
-      kegiatan: '📥 Pendaftaran',
-      waktu: 'Sepanjang hari',
+      kelas: '2',
+      emoji: '📚',
       gradient: 'linear-gradient(to right, #ffecd2, #fcb69f)',
     },
     {
-      tanggal: '14 Juli',
-      kegiatan: '📣 Pengarahan kepada calon murid',
-      waktu: '10.00 WIB',
+      kelas: '3',
+      emoji: '✏️',
       gradient: 'linear-gradient(to right, #a1c4fd, #c2e9fb)',
     },
     {
-      tanggal: '15 Juli',
-      kegiatan: '📝 Ujian Seleksi',
-      waktu: '10.00–12.00 WIB',
+      kelas: '4',
+      emoji: '📖',
       gradient: 'linear-gradient(to right, #fbc2eb, #a6c1ee)',
     },
     {
-      tanggal: '17 Juli',
-      kegiatan: '📢 Pengumuman Hasil Seleksi',
-      waktu: '10.00 WIB',
+      kelas: '6',
+      emoji: '🧠',
       gradient: 'linear-gradient(to right, #84fab0, #8fd3f4)',
-    },
-    {
-      tanggal: '18 & 21 Juli',
-      kegiatan: '🗂️ Daftar Ulang',
-      waktu: '08.00–15.00 WIB',
-      gradient: 'linear-gradient(to right, #fccb90, #d57eeb)',
-    },
-    {
-      tanggal: '22 Juli',
-      kegiatan: '🎉 Mutasi Berakhir',
-      waktu: 'Sampai tahun ajaran baru',
-      gradient: 'linear-gradient(to right,rgb(95, 163, 120),rgb(75, 130, 174))',
     },
   ];
 
@@ -58,30 +43,28 @@ export default function InformasiJadwalPage() {
 
   return (
     <div className="page">
-      <h1 className="title">📅 Jadwal Pelaksanaan Mutasi</h1>
+      <h1 className="title">📝 Kisi-Kisi Ujian Mutasi</h1>
       <p className="subtitle">
-        ✨ SDN Jagakarsa 13 Pagi – Tahun Ajaran Baru 2025/2026 🎓
+        📌 SDN Jagakarsa 13 Pagi – Tahun Ajaran 2025/2026
       </p>
 
       <div className="card-list">
-        {jadwal.map((item, idx) => (
+        {kisiKisi.map((item, idx) => (
           <div
-            className="card"
             key={idx}
+            className="card"
             style={{
               background: item.gradient,
               animationDelay: `${idx * 0.2}s`,
             }}
           >
-            <div className="emoji">{item.kegiatan.split(' ')[0]}</div>
-            <div className="kegiatan">
-              {item.kegiatan.replace(/^[^\s]+\s/, '')}
-            </div>
+            <div className="emoji">{item.emoji}</div>
+            <div className="kelas">Kelas {item.kelas}</div>
             <div className="divider" />
-            <div className="info">
-              <span className="badge">📆 {item.tanggal}</span>
-              <span className="badge time">⏰ {item.waktu}</span>
-            </div>
+            <Link href={`/kisi-kisi/${item.kelas}`}>
+              {' '}
+              <span className="detail-button">🔍 Lihat Kisi-kisi</span>
+            </Link>
           </div>
         ))}
       </div>
@@ -146,7 +129,7 @@ export default function InformasiJadwalPage() {
 
         .card-list {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
           gap: 2rem;
           width: 100%;
           max-width: 1000px;
@@ -159,9 +142,7 @@ export default function InformasiJadwalPage() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          color: #333;
           text-align: center;
-          backdrop-filter: blur(4px);
           animation: fadeSlideUp 0.6s ease both;
           transition:
             transform 0.3s ease,
@@ -178,10 +159,10 @@ export default function InformasiJadwalPage() {
           margin-bottom: 0.8rem;
         }
 
-        .kegiatan {
-          font-size: 1.5rem;
+        .kelas {
+          font-size: 1.6rem;
           font-weight: bold;
-          margin-bottom: 0.5rem;
+          color: #333;
         }
 
         .divider {
@@ -189,27 +170,23 @@ export default function InformasiJadwalPage() {
           height: 4px;
           background: rgba(255, 255, 255, 0.6);
           border-radius: 999px;
-          margin: 0.5rem 0 1rem;
+          margin: 1rem 0;
         }
 
-        .info {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .badge {
-          background: rgba(255, 255, 255, 0.85);
+        .detail-button {
+          background: #ffffffcc;
+          border: none;
           color: #333;
-          padding: 0.5rem 1rem;
+          padding: 0.6rem 1.2rem;
           border-radius: 999px;
-          font-weight: 600;
-          font-size: 0.95rem;
-          backdrop-filter: blur(2px);
+          font-size: 1rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.3s ease;
         }
 
-        .badge.time {
-          background: rgba(255, 255, 255, 0.7);
+        .detail-button:hover {
+          background: #ffffff;
         }
 
         @media (max-width: 480px) {
@@ -217,8 +194,8 @@ export default function InformasiJadwalPage() {
             font-size: 2rem;
           }
 
-          .kegiatan {
-            font-size: 1.2rem;
+          .kelas {
+            font-size: 1.3rem;
           }
 
           .emoji {

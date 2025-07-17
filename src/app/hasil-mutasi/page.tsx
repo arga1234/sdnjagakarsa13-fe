@@ -1,179 +1,103 @@
-'use client';   
-import { LoadingComponent } from '@/src/components';
-import { NextPage } from 'next';
-import Head from 'next/head';
+'use client';
+
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { LoadingComponent } from '../../components';
 
-interface Student {
-  no: number;
-  nama: string;
-  kelas: string;
-  rapor1: number;
-  rapor2: number;
-  rataRapor: number;
-  skorCaT: number;
-  interview: number;
-  rataTes: number;
-  rapor40: number;
-  tes60: number;
-  nilaiAkhir: number;
-  lulus: boolean;
-  docLink: string;
-}
+export default function LoginPage(): JSX.Element {
+  const router = useRouter();
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
-const initialData: Student[] = [
-  { no: 1, nama: 'Naira Putri Firmansyah', kelas: 'IV', rapor1: 82.63, rapor2: 85.75, rataRapor: 84.19, skorCaT: 160, interview: 90, rataTes: 125, rapor40: 33.68, tes60: 75.0, nilaiAkhir: 108.68, lulus: true, docLink: '' },
-  { no: 2, nama: 'Narendra Shawqi Achwan', kelas: 'III', rapor1: 83.5, rapor2: 86.13, rataRapor: 84.82, skorCaT: 125, interview: 90, rataTes: 107.5, rapor40: 33.93, tes60: 64.5, nilaiAkhir: 98.43, lulus: true, docLink: '' },
-  { no: 3, nama: 'Muhammad Alif Pratama', kelas: 'III', rapor1: 82.5, rapor2: 83.25, rataRapor: 82.88, skorCaT: 130, interview: 85, rataTes: 107.5, rapor40: 33.15, tes60: 64.5, nilaiAkhir: 97.65, lulus: true, docLink: '' },
-  { no: 4, nama: 'Muhammad Nauval Al Khairy', kelas: 'III', rapor1: 80.63, rapor2: 75.25, rataRapor: 77.94, skorCaT: 140, interview: 70, rataTes: 105, rapor40: 31.18, tes60: 63.0, nilaiAkhir: 94.18, lulus: false, docLink: '' },
-  { no: 5, nama: 'Clarissa Laiqa Shatierra', kelas: 'III', rapor1: 76.43, rapor2: 81.14, rataRapor: 78.79, skorCaT: 115, interview: 80, rataTes: 97.5, rapor40: 31.52, tes60: 58.5, nilaiAkhir: 90.02, lulus: false, docLink: '' },
-];
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+    if (password !== 'Jagakarsa13') {
+        setError('🚫 Username dan password tidak boleh kosong! 😢');
+        return;
+    }
+      const res = await fetch('/api/mutasi/hasil-mutasi ', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_peserta: username  }),
+      });
 
-const HasilSeleksi: NextPage = () => {
-  const [students] = useState<Student[]>(initialData);
-  const handleRowClick = (nama: string) => {
-    alert(`🎉 Kamu memilih: ${nama}! 🎉`);
+      if (!res.ok) throw new Error('gagal');
+      const result = await res.json();
+      console.log(result);  
+      localStorage.setItem('hasil-mutasi', JSON.stringify(result));
+      localStorage.setItem('nik', username);
+      router.push('/hasil-mutasi/hasil-pribadi');
+    } catch (err) {
+      console.error(err);
+      setError('🚫 Username atau password tidak ditemukan. Coba lagi ya! 😢');
+    } finally {
+      setLoading(false);
+    }
   };
-  const [loading, setLoading] = useState(true);
+
+  const toggleFullscreen = () => {
+    if (!isFullscreen) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+    setIsFullscreen(!isFullscreen);
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500); // Simulate loading for 2 seconds
-    return () => clearTimeout(timer);
+    setTimeout(() => setLoading(false), 500);
+    const onFullChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onFullChange);
+    return () => document.removeEventListener('fullscreenchange', onFullChange);
   }, []);
 
-  if(loading) {
-      return <LoadingComponent />
-  }
-  
-  return (
-    <>
-      <Head>
-        <title>🤩✨ Hasil Seleksi Mutasi SDN Jagakarsa 13 🤩✨</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <div className="container">
-        <div className="emoji-wrapper">
-          <span className="emoji" style={{ left: '10%', animationDelay: '0s' }}>🎈</span>
-          <span className="emoji" style={{ left: '30%', animationDelay: '1.5s' }}>🎉</span>
-          <span className="emoji" style={{ left: '50%', animationDelay: '3s' }}>🤩</span>
-          <span className="emoji" style={{ left: '70%', animationDelay: '4.5s' }}>✨</span>
-          <span className="emoji" style={{ left: '90%', animationDelay: '6s' }}>🚀</span>
-        </div>
-        <h1>🤩 Hasil Seleksi Mutasi SDN Jagakarsa 13 Pagi 🤩</h1>
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Nama Siswa 📚</th>
-                <th>Kelas</th>
-                <th>Rapor 1</th>
-                <th>Rapor 2</th>
-                <th>Rata-rata Rapor</th>
-                <th>Skor CaT</th>
-                <th>Interview</th>
-                <th>Rata-rata Tes</th>
-                <th>Rapor × 40%</th>
-                <th>Tes × 60%</th>
-                <th>Nilai Akhir 💯</th>
-                <th>Dokumen 📄</th>
-                <th className="freeze">Lulus 🎉</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((s) => (
-                <tr key={s.no} onClick={() => handleRowClick(s.nama)}>
-                  <td>{s.no}</td>
-                  <td className="name-col">{s.nama}</td>
-                  <td>{s.kelas}</td>
-                  <td>{s.rapor1.toFixed(2)}</td>
-                  <td>{s.rapor2.toFixed(2)}</td>
-                  <td>{s.rataRapor.toFixed(2)}</td>
-                  <td>{s.skorCaT}</td>
-                  <td>{s.interview}</td>
-                  <td>{s.rataTes.toFixed(2)}</td>
-                  <td>{s.rapor40.toFixed(2)}</td>
-                  <td>{s.tes60.toFixed(2)}</td>
-                  <td>{s.nilaiAkhir.toFixed(2)}</td>
-                  <td className="freeze">
-                    <a href={s.docLink} target="_blank" rel="noopener noreferrer" className="doc-button">
-                      📄 Lihat
-                    </a>
-                  </td>
-                  <td className="freeze">{s.lulus ? '✅' : '❌'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          min-height: 100vh;
-          padding: 20px;
-          background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-          background-size: 800% 800%;
-          animation: gradientAnimation 12s ease infinite;
-          font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-        .emoji-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
-        .emoji { position: absolute; bottom: -50px; font-size: 2.5rem; opacity: 0.8; animation: floatEmoji 8s ease-in infinite; }
-        @keyframes floatEmoji {
-          0% { transform: translateY(0) scale(1); opacity: 0.8; }
-          50% { opacity: 1; }
-          100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
-        }
-        h1 {
-          margin-bottom: 20px;
-          font-size: 1.6rem;
-          text-align: center;
-          color: #222;
-          letter-spacing: 2px;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          transform: rotate(-1deg);
-        }
-        .table-wrapper {
-          width: 100%;
-          max-width: 1200px;
-          overflow-x: auto;
-          border-radius: 10px;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-          background: #fff;
-        }
-        table { width: 100%; border-collapse: collapse; text-align: center; white-space: nowrap; }
-        th, td { padding: 16px 12px; border-bottom: 1px solid #ddd; font-size: 15px; color: #333; min-width: 140px; }
-        .name-col { text-align: left; padding-left: 20px; }
-        thead th { background: #2b6cb0; color: #fff; position: sticky; top: 0; z-index: 2; }
-        tbody tr:nth-child(odd) td { background: #fffbea; }
-        tbody tr:nth-child(even) td { background: #e6fffa; }
-        .freeze { position: sticky; right: 0; background: #fefcbf; z-index: 3; }
-        .doc-button {
-          display: inline-block;
-          padding: 6px 10px;
-          background: #805ad5;
-          color: #fff;
-          border-radius: 4px;
-          text-decoration: none;
-          font-size: 14px;
-          transition: background 0.3s;
-        }
-        .doc-button:hover { background: #6b46c1; }
-        tr:hover td { background-color: #bee3f8; cursor: pointer; }
-        @keyframes gradientAnimation {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
-    </>
-  );
-};
+  if (loading) return <LoadingComponent />;
 
-export default HasilSeleksi;
+  return (
+    <div className="login-page">
+      <style jsx>{`
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .login-page { min-height:100vh; display:flex; justify-content:center; align-items:center; background:linear-gradient(-45deg,#ffeaa7,#fab1a0,#a29bfe,#74b9ff); background-size:400% 400%; animation:gradientBG 20s ease infinite; padding:20px; }
+        .login-card { position:relative; background:rgba(255,255,255,0.96); padding:40px; border-radius:20px; box-shadow:0 14px 34px rgba(0,0,0,0.2); max-width:420px; width:100%; text-align:center; }
+        .login-card::before { content:'🎉'; font-size:36px; position:absolute; top:-20px; left:-20px; animation:float 3s ease-in-out infinite; }
+        .login-card::after { content:'🚀'; font-size:36px; position:absolute; bottom:-20px; right:-20px; animation:float 4s ease-in-out infinite; }
+        .fullscreen-btn { position:absolute; top:16px; right:16px; z-index:1000; background:rgba(0,0,0,0.05); border:none; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; transition:background 0.2s ease, transform 0.2s ease; }
+        .fullscreen-btn:hover { background:rgba(0,0,0,0.1); transform:scale(1.1); }
+        h2 { margin-bottom:18px; font-size:26px; color:#6c5ce7; }
+        .input-group { margin-bottom:20px; text-align:left; }
+        .input-group label { display:block; margin-bottom:6px; font-weight:bold; font-size:16px; }
+        .input-group input { width:100%; padding:12px; border:2px solid #dfe6e9; border-radius:10px; font-size:16px; transition:0.2s ease; background:#fff; color:#2d3436; }
+        .input-group input:focus { border-color:#6c5ce7; outline:none; }
+        .btn-login { width:100%; padding:14px; background:#6c5ce7; color:#fff; border:none; border-radius:14px; font-size:18px; font-weight:bold; cursor:pointer; transition:transform 0.2s ease, background 0.2s ease; }
+        .btn-login:hover { transform:scale(1.03); background:#341f97; }
+        .error-msg { color:#d63031; margin-top:14px; font-size:14px; }
+      `}</style>
+
+      <div className="login-card">
+        <button className="fullscreen-btn" onClick={toggleFullscreen} aria-label="Toggle Fullscreen">
+          {isFullscreen ? '✖' : '⛶'}
+        </button>
+        <h2>👋 Cek hasil mutasi Yuk! Bismillah 🔓</h2>
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <label htmlFor="username">👤 Username</label>
+            <input id="username" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Masukan NIK" required />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">🔒 Password</label>
+            <input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Masukan password" required />
+          </div>
+          <button type="submit" className="btn-login">✅ Cek Sekarang</button>
+        </form>
+        {error && <p className="error-msg">{error}</p>}
+      </div>
+    </div>
+  );
+}

@@ -1,7 +1,0 @@
-/* SeleksiTable.css */
-.ant-table {
-  background-color: transparent !important;
-}
-.ant-table-cell {
-  transition: background 0.3s ease;
-}

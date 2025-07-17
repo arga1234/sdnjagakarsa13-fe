@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoadingComponent } from '../../components';
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');

@@ -46,8 +46,8 @@ export default function HasilMutasiPribadi() {
           <div className="emoji">{data.is_lulus ? '🎉' : '😢'}</div>
           <div className="title">
             {data.is_lulus
-              ? `SELAMAT ${data.nama.toUpperCase()}!`
-              : `MAAF ${data.nama.toUpperCase()}`}
+              ? `Selamat ${data.nama.toUpperCase()}!`
+              : `Mohon Maaf ${data.nama.toUpperCase()}`}
           </div>
           <div className="subtitle">
             {data.is_lulus
@@ -55,7 +55,7 @@ export default function HasilMutasiPribadi() {
               : 'Belum diterima di SDN Jagakarsa 13 Pagi'}
           </div>
           {data.is_lulus && (
-            <div className="school-name">SDN Jagakarsa 13 Pagi 🏫</div>
+            <div className="school-name">{data.kelasTujuan} SDN Jagakarsa 13 Pagi 🏫</div>
           )}
           <Link href="/hasil-mutasi/detail" className="btn-link">
             📄 Detail Penilaian

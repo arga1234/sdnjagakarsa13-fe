@@ -2,14 +2,14 @@
 
 .page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 25%, #fbc2eb 50%, #a18cd1 75%, #fbc2eb 100%);
-  background-size: 400% 400%;
-  animation: bgShift 12s ease infinite;
-  font-family: 'Fredoka One', cursive;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px;
+  font-family: 'Fredoka One', cursive;
+  background: linear-gradient(135deg, #b85ccb 0%, #a4307e 20%, #48a4ea 60%, #58e4e4 100%);
+  background-size: 400% 400%;
+  animation: bgShift 15s ease infinite;
 }
 
 @keyframes bgShift {
@@ -19,84 +19,69 @@
 }
 
 .card {
-  background: linear-gradient(135deg, #6adce2, #fbc2eb, #a1c4fd);
-  background-size: 300% 300%;
-  animation: gradientCardShift 10s ease infinite;
-  border-radius: 32px;
-  padding: 50px 30px;
-  max-width: 600px;
+  background: linear-gradient(145deg, #ffffff, #fdf0f0);
+  border-radius: 36px;
+  padding: 60px 40px;
   width: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 720px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   text-align: center;
   animation: fadeInUp 0.8s ease both;
+  transition: transform 0.3s ease;
 }
 
-@keyframes gradientCardShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.card:hover {
+  transform: translateY(-4px);
 }
-
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .emoji {
   font-size: 48px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .title {
-  font-size: 30px;
-  color: #2e7d32;
-  margin-bottom: 10px;
+  font-size: 36px;
+  color: #6A1B9A; /* ungu glamor */
+  margin-bottom: 12px;
 }
 
 .subtitle {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 22px;
+  color: #37474F; /* grey soft */
+  margin-bottom: 8px;
 }
 
 .school-name {
-  font-size: 16px;
-  color: #888;
-  margin-top: 4px;
+  font-size: 18px;
+  color: #607D8B; /* grey kebiruan */
+  margin-top: 6px;
 }
 
 .btn-link {
   display: inline-block;
-  margin-top: 30px;
-  background-color: #f50057;
+  margin-top: 36px;
+  background: #FF4081;
   color: white;
-  padding: 14px 28px;
-  border-radius: 12px;
-  text-decoration: none;
+  padding: 16px 36px;
   font-size: 18px;
-  transition: transform 0.3s ease;
+  border-radius: 16px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .btn-link:hover {
-  transform: scale(1.05);
-  background-color: #d0004d;
+  background: #D81B60;
+  transform: scale(1.04);
 }
 
 .countdown {
-  font-size: 100px;
+  font-size: 130px;
   color: white;
-  text-shadow: 3px 3px rgba(0,0,0,0.2);
+  text-shadow: 4px 4px rgba(0, 0, 0, 0.3);
 }

@@ -7,15 +7,27 @@
   justify-content: center;
   padding: 32px;
   font-family: 'Fredoka One', cursive;
-  background: linear-gradient(135deg, #b85ccb 0%, #a4307e 20%, #48a4ea 60%, #58e4e4 100%);
+  background: linear-gradient(
+    135deg,
+    #b85ccb 0%,
+    #a4307e 20%,
+    #48a4ea 60%,
+    #58e4e4 100%
+  );
   background-size: 400% 400%;
   animation: bgShift 15s ease infinite;
 }
 
 @keyframes bgShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .card {
@@ -35,8 +47,14 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .emoji {
@@ -46,37 +64,39 @@
 
 .title {
   font-size: 36px;
-  color: #6A1B9A; /* ungu glamor */
+  color: #6a1b9a; /* ungu glamor */
   margin-bottom: 12px;
 }
 
 .subtitle {
   font-size: 22px;
-  color: #37474F; /* grey soft */
+  color: #37474f; /* grey soft */
   margin-bottom: 8px;
 }
 
 .school-name {
   font-size: 18px;
-  color: #607D8B; /* grey kebiruan */
+  color: #607d8b; /* grey kebiruan */
   margin-top: 6px;
 }
 
 .btn-link {
   display: inline-block;
   margin-top: 36px;
-  background: #FF4081;
+  background: #ff4081;
   color: white;
   padding: 16px 36px;
   font-size: 18px;
   border-radius: 16px;
   text-decoration: none;
   box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
 }
 
 .btn-link:hover {
-  background: #D81B60;
+  background: #d81b60;
   transform: scale(1.04);
 }
 

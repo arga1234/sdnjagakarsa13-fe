@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 55321",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.20",
     "antd": "^5.26.2",
+    "leaflet": "^1.9.4",
     "mammoth": "^1.9.1",
     "next": "^13.5.4",
     "pdf-parse": "^1.1.1",

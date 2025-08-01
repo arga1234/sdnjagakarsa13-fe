@@ -94,7 +94,9 @@ export default function QRCodePage() {
       {user && payload && (
         <div className="qr-container">
           <QRCodeCanvas value={payload} size={220} />
-          <p className="instruction">🎉 Tunjukkan QR ini ke petugas saat absensi!</p>
+          <p className="instruction">
+            🎉 Tunjukkan QR ini ke petugas saat absensi!
+          </p>
           <p style={{ marginTop: '10px' }}>
             Atas nama {nama}, {nik}, kelas {kelas}
           </p>
@@ -110,7 +112,13 @@ export default function QRCodePage() {
           min-height: 100vh;
           padding: 20px;
           text-align: center;
-          background: linear-gradient(45deg, #ff6ec4, #7873f5, #4ade80, #facc15);
+          background: linear-gradient(
+            45deg,
+            #ff6ec4,
+            #7873f5,
+            #4ade80,
+            #facc15
+          );
           background-size: 400% 400%;
           animation: gradientMove 15s ease infinite;
           color: #fff;
@@ -164,7 +172,9 @@ export default function QRCodePage() {
           font-weight: bold;
           border-radius: 9999px;
           cursor: pointer;
-          transition: background 0.3s ease, transform 0.3s ease;
+          transition:
+            background 0.3s ease,
+            transform 0.3s ease;
         }
         .btn:hover {
           background: #ffe88f;

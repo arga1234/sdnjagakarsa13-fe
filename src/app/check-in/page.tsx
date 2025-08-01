@@ -6,12 +6,17 @@ import { SelectField, TextField } from '@/src/components/fieldv2';
 import { useCheckInHook } from './hook';
 
 export default function Page() {
-  const {loading, error, handleLogin: originalSubmit, setLoading} = useCheckInHook()
+  const {
+    loading,
+    error,
+    handleLogin: originalSubmit,
+    setLoading,
+  } = useCheckInHook();
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    originalSubmit(e);
     e.preventDefault();
+    originalSubmit(e);
   };
 
   const toggleFullscreen = () => {
@@ -182,8 +187,8 @@ export default function Page() {
         >
           {isFullscreen ? '✖' : '⛶'}
         </button>
-        <h2 style={{textAlign: 'center'}}>Masuk Yuk!</h2>
-        <form style={{color: 'grey'}} onSubmit={handleLogin}>
+        <h2 style={{ textAlign: 'center' }}>Masuk Yuk!</h2>
+        <form style={{ color: 'grey' }} onSubmit={handleLogin}>
           <TextField
             label="Nama Anak"
             placeholder="Masukan Nama Anak"
@@ -198,7 +203,16 @@ export default function Page() {
             icon=""
             rules={[{ required: true, message: 'NIK wajib diisi' }]}
           />
-          <SelectField label={'Kehadiran MPLS'} name={'eventId'} options={[{label: 'Kehadiran MPLS', value: 'd9701a7d-b86d-4cdb-b6b8-873219eedd2f'}]} ></SelectField>
+          <SelectField
+            label={'Kehadiran MPLS'}
+            name={'eventId'}
+            options={[
+              {
+                label: 'Kehadiran MPLS',
+                value: 'd9701a7d-b86d-4cdb-b6b8-873219eedd2f',
+              },
+            ]}
+          ></SelectField>
           <SelectField
             label={'Kelas'}
             name={'id_kelas'}

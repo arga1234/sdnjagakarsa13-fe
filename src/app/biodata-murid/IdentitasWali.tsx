@@ -1,7 +1,8 @@
 'use client';
 import { TextField, SelectField } from '@/src/components/fieldv2';
 import { ValidationRule } from '@/src/util';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { usePageHook } from './hookPage';
 
 const pekerjaanOptions = [
   'Tidak bekerja',
@@ -67,11 +68,22 @@ export function IdentitasWali({
   previousButton,
   subTitle,
   rules,
+  handleSubmitForm,
+  localStorageName,
+  formId,
 }: {
+  formId: string;
   wali: string;
   nextButton: () => void;
   previousButton: () => void;
   subTitle: string;
+  localStorageName: string;
+  handleSubmitForm: (
+    e: React.FormEvent<HTMLFormElement>,
+    nextButton: () => void,
+    previousButton: () => void,
+    localstorageName: string,
+  ) => void;
   rules?: {
     nama?: ValidationRule[];
     tahunLahir?: ValidationRule[];
@@ -80,19 +92,18 @@ export function IdentitasWali({
     penghasilan?: ValidationRule[];
   };
 }) {
-  const handleSubmitForm = useCallback(
+  const submit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const jsonObject: Record<string, FormDataEntryValue> = {};
-      for (const [key, value] of formData.entries()) {
-        jsonObject[key] = value;
-      }
-      localStorage.setItem(`data-${wali}`, JSON.stringify(jsonObject));
+      handleSubmitForm(e, nextButton, previousButton, localStorageName);
     },
-    [wali],
+    [handleSubmitForm, nextButton, previousButton, localStorageName],
   );
 
+  const { loadFormDataFromLocalStorage } = usePageHook();
+
+  useEffect(() => {
+    loadFormDataFromLocalStorage(formId, `data-${localStorageName}`);
+  }, [formId, loadFormDataFromLocalStorage, localStorageName]);
   return (
     <div
       style={{
@@ -109,7 +120,8 @@ export function IdentitasWali({
           padding: '20px',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'var(--background)',
+          backgroundColor: 'transparent',
+          backdropFilter: 'blur(10px)',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
@@ -121,8 +133,9 @@ export function IdentitasWali({
         <p>{subTitle}</p>
       </div>
       <form
+        id={formId}
         style={{ maxWidth: '800px', margin: '0 auto' }}
-        onSubmit={handleSubmitForm}
+        onSubmit={submit}
       >
         <TextField
           label={`Nama ${wali}`}
@@ -181,7 +194,8 @@ export function IdentitasWali({
             width: '100%',
             position: 'sticky',
             bottom: 0,
-            backgroundColor: 'var(--background)',
+            backgroundColor: 'transparent',
+            backdropFilter: 'blur(10px)',
             zIndex: 1000,
             display: 'flex',
             flexWrap: 'nowrap',
@@ -189,7 +203,6 @@ export function IdentitasWali({
           }}
         >
           <button
-            onClick={previousButton}
             style={{
               width: '100%',
               padding: '10px 20px',
@@ -199,11 +212,11 @@ export function IdentitasWali({
               borderRadius: '5px',
               cursor: 'pointer',
             }}
+            value="previous"
           >
             Sebelumnya
           </button>
           <button
-            onClick={nextButton}
             style={{
               width: '100%',
               padding: '10px 20px',
@@ -213,6 +226,7 @@ export function IdentitasWali({
               borderRadius: '5px',
               cursor: 'pointer',
             }}
+            value="next"
           >
             Selanjutnya
           </button>

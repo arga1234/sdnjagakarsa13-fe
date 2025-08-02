@@ -42,7 +42,7 @@ type WaliIbuRules = {
 type Dokumen = {
   akteFile: ValidationRule[];
   kkFile: ValidationRule[];
-  foto: ValidationRule[]
+  foto: ValidationRule[];
 };
 
 export type Rules = {

@@ -78,7 +78,10 @@ export function DateField({
         }}
       >
         <span style={{ fontSize: '18px', marginRight: '10px' }}>📅</span>
-        <span style={{ paddingTop: '3px', color: 'grey' }}>
+        <span
+          id={`date-of-${name}`}
+          style={{ paddingTop: '3px', color: 'grey' }}
+        >
           {displayValue || 'hari / bulan / tahun'}
         </span>
       </div>

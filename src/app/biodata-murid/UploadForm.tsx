@@ -1,18 +1,39 @@
 import { UploadField } from '@/src/components/fieldv2';
 import { ValidationRule } from '@/src/util';
+import { useCallback } from 'react';
+import { tabMemo } from './data';
 
 export default function KontakForm({
   nextButtonOnClick,
   prevButtonOnClick,
   rules,
+  handleSubmitForm,
 }: {
   nextButtonOnClick: () => void;
   prevButtonOnClick: () => void;
-  rules: { akteFile: ValidationRule[]; kkFile: ValidationRule[]; foto: ValidationRule[] };
-}) {
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  rules: {
+    akteFile: ValidationRule[];
+    kkFile: ValidationRule[];
+    foto: ValidationRule[];
   };
+  handleSubmitForm: (
+    e: React.FormEvent<HTMLFormElement>,
+    nextButton: () => void,
+    previousButton: () => void,
+    localstorageName: string,
+  ) => void;
+}) {
+  const submit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      handleSubmitForm(
+        e,
+        nextButtonOnClick,
+        prevButtonOnClick,
+        tabMemo.dokumen,
+      );
+    },
+    [handleSubmitForm, nextButtonOnClick, prevButtonOnClick],
+  );
 
   return (
     <div
@@ -30,7 +51,6 @@ export default function KontakForm({
           padding: '20px',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'var(--background)',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
@@ -43,30 +63,30 @@ export default function KontakForm({
       </div>
       <form
         style={{ maxWidth: '800px', margin: '0 auto' }}
-        onSubmit={handleSubmitForm}
+        onSubmit={submit}
       >
         <UploadField
           maxSizeMB={2}
           accept=".jpg,.jpeg,.png,.pdf"
-          label={'📝 Akte kelahiran'}
+          label={'Akte kelahiran'}
           name={'fileAkteLahir'}
-          placeholder="Upload scan akte lahir"
+          placeholder="📝 Upload scan akte lahir"
           rules={rules.akteFile}
         />
         <UploadField
           maxSizeMB={2}
           accept=".jpg,.jpeg,.png,.pdf"
-          label={'📃 Kartu Keluarga'}
+          label={'Kartu Keluarga'}
           name={'fileKartuKeluarga'}
-          placeholder="Upload scan kartu keluarga"
+          placeholder="📃 Upload scan kartu keluarga"
           rules={rules.kkFile}
         />
         <UploadField
           maxSizeMB={2}
           accept=".jpg,.jpeg,.png"
-          label={'🖼️ Foto peserta didik (bebas rapi)'}
+          label={'Foto peserta didik (bebas rapi)'}
           name={'fileFoto'}
-          placeholder="Upload foto peserta didik"
+          placeholder="🖼️ Upload foto peserta didik"
           rules={rules.foto}
         />
         <div
@@ -75,7 +95,6 @@ export default function KontakForm({
             width: '100%',
             position: 'sticky',
             bottom: 0,
-            backgroundColor: 'var(--background)',
             zIndex: 1000,
             display: 'flex',
             flexDirection: 'column',
@@ -97,6 +116,7 @@ export default function KontakForm({
             Sebelumnya
           </button>
           <button
+          value={'submit'}
             onClick={nextButtonOnClick}
             style={{
               width: '100%',

@@ -1,19 +1,37 @@
 import { TextField } from '@/src/components/fieldv2';
 import { ValidationRule } from '@/src/util';
+import { usePageHook } from './hookPage';
+import { useEffect } from 'react';
 
 export default function KontakForm({
   nextButtonOnClick,
   prevButtonOnClick,
   rules,
+  handleSubmitForm,
+  formId,
+  localStorageName,
 }: {
+  localStorageName: string;
+  formId: string;
   nextButtonOnClick: () => void;
   prevButtonOnClick: () => void;
   rules: { phoneNumber: ValidationRule[] };
+  handleSubmitForm: (
+    e: React.FormEvent<HTMLFormElement>,
+    nextButton: () => void,
+    previousButton: () => void,
+    localstorageName: string,
+  ) => void;
 }) {
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSubmitForm(e, nextButtonOnClick, prevButtonOnClick, 'kontak');
   };
 
+  const { loadFormDataFromLocalStorage } = usePageHook();
+
+  useEffect(() => {
+    loadFormDataFromLocalStorage(formId, `data-${localStorageName}`);
+  }, [formId, loadFormDataFromLocalStorage, localStorageName]);
   return (
     <div
       style={{
@@ -30,7 +48,6 @@ export default function KontakForm({
           padding: '20px',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'var(--background)',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
@@ -42,8 +59,9 @@ export default function KontakForm({
         <p>Peserta didik yang bisa dihubungi</p>
       </div>
       <form
+        id={formId}
         style={{ maxWidth: '800px', margin: '0 auto' }}
-        onSubmit={handleSubmitForm}
+        onSubmit={submit}
       >
         <TextField
           icon="☎️"
@@ -71,7 +89,6 @@ export default function KontakForm({
             width: '100%',
             position: 'sticky',
             bottom: 0,
-            backgroundColor: 'var(--background)',
             zIndex: 1000,
             display: 'flex',
             flexDirection: 'column',
@@ -79,6 +96,7 @@ export default function KontakForm({
           }}
         >
           <button
+            type="submit"
             onClick={prevButtonOnClick}
             style={{
               width: '100%',
@@ -89,11 +107,13 @@ export default function KontakForm({
               borderRadius: '5px',
               cursor: 'pointer',
             }}
+            value={'previous'}
           >
             Sebelumnya
           </button>
           <button
-            onClick={nextButtonOnClick}
+            value={'next'}
+            type="submit"
             style={{
               width: '100%',
               padding: '10px 20px',

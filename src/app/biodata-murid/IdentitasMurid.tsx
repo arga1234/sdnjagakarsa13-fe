@@ -1,20 +1,32 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { DateField, SelectField, TextField } from '../../components/fieldv2';
 import { useRegistrasiUlangHook } from './hookIdentitasMurid';
 import LeafletMap from '@/src/components/LeafletMap';
 import { BiodataMuridValidation } from './types';
+import { tabMemo } from './data';
+import { usePageHook } from './hookPage';
 
 export function IdentitasMurid({
-  buttonLabel,
   validationRules,
+  nextButton,
+  previousButton,
+  handleSubmitForm,
+  formId,
 }: {
-  buttonLabel: string;
+  formId: string;
+  nextButton: () => void;
+  previousButton: () => void;
   validationRules: BiodataMuridValidation;
+  handleSubmitForm: (
+    e: React.FormEvent<HTMLFormElement>,
+    nextButton: () => void,
+    previousButton: () => void,
+    localstorageName: string,
+  ) => void;
 }) {
   const {
-    handleSubmitForm,
     isKewarganegaraanLainnyaVisible,
     setIsKewarganegaraanLainnyaVisible,
     punyaKIPValue,
@@ -30,6 +42,13 @@ export function IdentitasMurid({
     setBujur,
     setLintang,
   } = useRegistrasiUlangHook();
+  const { loadFormDataFromLocalStorage } = usePageHook();
+  const submit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      handleSubmitForm(e, nextButton, previousButton, tabMemo.murid);
+    },
+    [handleSubmitForm, nextButton, previousButton],
+  );
 
   const agamaOptions = [
     { label: 'Islam', value: 'islam' },
@@ -40,6 +59,10 @@ export function IdentitasMurid({
     { label: 'Konghucu', value: 'konghucu' },
     { label: 'Lainnya', value: 'lainnya' },
   ];
+
+  useEffect(() => {
+    loadFormDataFromLocalStorage(tabMemo.murid, `data-${tabMemo.murid}`);
+  }, [loadFormDataFromLocalStorage]);
 
   return (
     <div
@@ -57,7 +80,8 @@ export function IdentitasMurid({
           padding: '20px',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'var(--background)',
+          backgroundColor: 'transparent',
+          backdropFilter: 'blur(10px)',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
@@ -69,10 +93,9 @@ export function IdentitasMurid({
         <p>SD Negeri Jagakarsa 13 Pagi</p>
       </div>
       <form
+        id={formId}
         style={{ maxWidth: '800px', margin: '0 auto' }}
-        onSubmit={(e) => {
-          handleSubmitForm(e)
-        }}
+        onSubmit={submit}
       >
         <TextField
           label="Nama Lengkap"
@@ -397,7 +420,7 @@ export function IdentitasMurid({
                 value: 'dilarang_pemda',
               },
               { label: 'Menolak', value: 'menolak' },
-              { label: 'Sudah Mampu', value: 'sudah_mampu' },
+              { label: 'Sudah Mampu', value: 'sudah mampu' },
             ]}
             rules={[
               { required: true, message: 'Alasan menolak PIP wajib diisi' },
@@ -442,11 +465,14 @@ export function IdentitasMurid({
             width: '100%',
             position: 'sticky',
             bottom: 0,
-            backgroundColor: 'var(--background)',
+            backgroundColor: 'transparent',
+            backdropFilter: 'blur(10px)',
             zIndex: 1000,
           }}
         >
           <button
+            type="submit"
+            value={'next'}
             style={{
               width: '100%',
               padding: '10px 20px',
@@ -457,7 +483,7 @@ export function IdentitasMurid({
               cursor: 'pointer',
             }}
           >
-            {buttonLabel}
+            Selanjutnya
           </button>
         </div>
       </form>

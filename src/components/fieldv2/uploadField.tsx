@@ -93,6 +93,7 @@ export function UploadField({
       </label>
 
       <div
+        id={`file-of-${name}`}
         onClick={handleClick}
         style={{
           width: '100%',

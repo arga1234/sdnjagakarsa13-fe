@@ -39,6 +39,8 @@ type WaliIbuRules = {
   penghasilan: ValidationRule[];
 };
 
+type WaliAyah = WaliIbuRules
+
 type Dokumen = {
   akteFile: ValidationRule[];
   kkFile: ValidationRule[];
@@ -49,6 +51,7 @@ export type Rules = {
   kontak: KontakRules;
   wali: WaliRules;
   waliIbu: WaliIbuRules;
+  ayah: WaliAyah;
   murid: BiodataMuridValidation;
   dokumen: Dokumen;
 };

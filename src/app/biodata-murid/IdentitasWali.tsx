@@ -140,7 +140,7 @@ export function IdentitasWali({
         <TextField
           label={`Nama ${wali}`}
           name="nama"
-          icon="👨"
+          icon="👫"
           placeholder={`Masukan Nama ${wali}`}
           rules={rules?.nama || []}
         />
@@ -182,11 +182,28 @@ export function IdentitasWali({
           placeholder={`Penghasilan ${wali}`}
           rules={rules?.penghasilan || []}
         />
-        <TextField
-          label={`Berkebutuhan khusus`}
+        <SelectField
+          label="Berkebutuhan Khusus"
           name="kebutuhanKhusus"
-          icon="♿"
-          placeholder={`Berkebutuhan khusus`}
+          options={[
+            { label: 'netra', value: 'netra' },
+            { label: 'rungu', value: 'rungu' },
+            { label: 'grahita(IQ) ringan', value: 'grahita ringan' },
+            { label: 'grahita sedang', value: 'grahita sedang' },
+            { label: 'daksa ringan', value: 'daksa ringan' },
+            { label: 'daksa sedang', value: 'daksa sedang' },
+            { label: 'laras', value: 'laras' },
+            { label: 'wicara', value: 'wicara' },
+            { label: 'hyperaktif', value: 'hyperaktif' },
+            { label: 'cerdas istimewa', value: 'cerdas istimewa' },
+            { label: 'bakat istimewa', value: 'bakat istimewa' },
+            { label: 'kesulitan belajar', value: 'kesulitan belajar' },
+            { label: 'narkoba', value: 'narkoba' },
+            { label: 'indigo', value: 'indigo' },
+            { label: 'down syndrome', value: 'down syndrome' },
+            { label: 'autis', value: 'autis' },
+          ]}
+          rules={[]}
         />
         <div
           style={{

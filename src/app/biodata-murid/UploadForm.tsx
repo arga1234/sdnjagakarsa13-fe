@@ -67,25 +67,25 @@ export default function KontakForm({
       >
         <UploadField
           maxSizeMB={2}
-          accept=".jpg,.jpeg,.png,.pdf"
-          label={'Akte kelahiran'}
-          name={'fileAkteLahir'}
+          accept=".jpg,.jpeg,.png"
+          label={'Akte kelahiran (Max. 2 MB)'}
+          name={'akteFile'}
           placeholder="📝 Upload scan akte lahir"
           rules={rules.akteFile}
         />
         <UploadField
           maxSizeMB={2}
-          accept=".jpg,.jpeg,.png,.pdf"
-          label={'Kartu Keluarga'}
-          name={'fileKartuKeluarga'}
+          accept=".jpg,.jpeg,.png"
+          label={'Kartu Keluarga (Max. 2 MB)'}
+          name={'kkFile'}
           placeholder="📃 Upload scan kartu keluarga"
           rules={rules.kkFile}
         />
         <UploadField
           maxSizeMB={2}
           accept=".jpg,.jpeg,.png"
-          label={'Foto peserta didik (bebas rapi)'}
-          name={'fileFoto'}
+          label={'Pas foto / foto bebas rapi (Max. 2 MB)'}
+          name={'foto'}
           placeholder="🖼️ Upload foto peserta didik"
           rules={rules.foto}
         />

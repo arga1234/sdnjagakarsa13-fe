@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import React, { useEffect } from 'react';
@@ -12,25 +13,14 @@ import { tabMemo } from './data';
 export default function Page() {
   const { tab, setTab, rules, biodataMuridLocalData, handleSubmitForm } =
     usePageHook();
+  // const { setTab } =
+  //   usePageHook();
   const tabParam = useSearchParams().get('tab');
   const router = useRouter();
 
   useEffect(() => {
     setTab(tabParam || tabMemo.murid);
   }, [setTab, tabParam]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      console.log('Tombol back ditekan, redirecting...');
-      router.back(); // Ganti dengan rute yang kamu mau
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [router]);
 
   return (
     <div className="container">
@@ -39,26 +29,27 @@ export default function Page() {
           formId={tabMemo.murid}
           validationRules={rules.murid}
           nextButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.ayah}`);
+            router.push(`/biodata-murid?tab=${tabMemo.ayah}`);
           }}
           previousButton={function (): void {
-            router.replace(`/`);
+            router.push(`/`);
           }}
           handleSubmitForm={handleSubmitForm}
         />
       </div>
       <div style={{ display: tab === tabMemo.ayah ? 'block' : 'none' }}>
         <IdentitasWali
+          rules={rules.ayah}
           formId={tabMemo.ayah}
           localStorageName={tabMemo.ayah}
           handleSubmitForm={handleSubmitForm}
           subTitle="Peserta didik"
           wali={'Ayah Kandung'}
           previousButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.murid}`);
+            router.push(`/biodata-murid?tab=${tabMemo.murid}`);
           }}
           nextButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.ibu}`);
+            router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
           }}
         />
       </div>
@@ -71,13 +62,13 @@ export default function Page() {
           subTitle="Peserta didik"
           wali={'Ibu Kandung'}
           previousButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.ayah}`);
+            router.push(`/biodata-murid?tab=${tabMemo.ayah}`);
           }}
           nextButton={function (): void {
             if (biodataMuridLocalData() === 'ya') {
-              router.replace(`/biodata-murid?tab=${tabMemo.wali}`);
+              router.push(`/biodata-murid?tab=${tabMemo.wali}`);
             } else {
-              router.replace(`/biodata-murid?tab=${tabMemo.kontak}`);
+              router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
             }
           }}
         />
@@ -91,10 +82,10 @@ export default function Page() {
           wali={'Wali Murid'}
           rules={rules.wali}
           nextButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.kontak}`);
+            router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
           }}
           previousButton={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.ibu}`);
+            router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
           }}
         ></IdentitasWali>
       </div>
@@ -103,13 +94,13 @@ export default function Page() {
           localStorageName={tabMemo.kontak}
           formId={tabMemo.kontak}
           nextButtonOnClick={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.dokumen}`);
+            router.push(`/biodata-murid?tab=${tabMemo.dokumen}`);
           }}
           prevButtonOnClick={function (): void {
             if (biodataMuridLocalData() === 'ya') {
-              router.replace(`/biodata-murid?tab=${tabMemo.wali}`);
+              router.push(`/biodata-murid?tab=${tabMemo.wali}`);
             } else {
-              router.replace(`/biodata-murid?tab=${tabMemo.ibu}`);
+              router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
             }
           }}
           rules={rules.kontak}
@@ -121,7 +112,7 @@ export default function Page() {
           handleSubmitForm={handleSubmitForm}
           nextButtonOnClick={function (): void {}}
           prevButtonOnClick={function (): void {
-            router.replace(`/biodata-murid?tab=${tabMemo.kontak}`);
+            router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
           }}
           rules={rules.dokumen}
         />
@@ -154,3 +145,7 @@ export default function Page() {
     </div>
   );
 }
+
+// export default function Page() {
+//   return <></>
+// }

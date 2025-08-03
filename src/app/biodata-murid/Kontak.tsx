@@ -71,7 +71,7 @@ export default function KontakForm({
         />
         <TextField
           icon="📱"
-          name="hp"
+          name="phoneNumber"
           placeholder="Masukan Nomor HP atau WA"
           label={'Nomor HP atau Whats App'}
           rules={rules.phoneNumber}

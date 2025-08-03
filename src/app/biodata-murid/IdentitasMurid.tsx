@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import React, { useCallback, useEffect } from 'react';
 import { DateField, SelectField, TextField } from '../../components/fieldv2';
 import { useRegistrasiUlangHook } from './hookIdentitasMurid';
-import LeafletMap from '@/src/components/LeafletMap';
 import { BiodataMuridValidation } from './types';
 import { tabMemo } from './data';
 import { usePageHook } from './hookPage';
+import dynamic from 'next/dynamic';
+const LeafletMap = dynamic(() => import('@/src/components/LeafletMap'), {
+  ssr: false,
+});
 
 export function IdentitasMurid({
   validationRules,
@@ -214,11 +218,11 @@ export function IdentitasMurid({
             { label: 'Tidak', value: 'tidak' },
           ]}
           rules={[{ required: true }]}
-          icon="🛐"
+          icon="👨‍👩‍👦"
         />
         <TextField
-          label="Alamat tempat tinggal (No Rumah & Jalan) "
-          placeholder="Masukkan Nama Jalan"
+          label="Domisili Alamat tempat tinggal (No Rumah & Jalan) "
+          placeholder="Masukkan sesuai domisili"
           name="alamatJalan"
           icon="🛣️"
           rules={validationRules.alamatJalan}
@@ -227,7 +231,7 @@ export function IdentitasMurid({
           <div style={{ flex: '1', width: '100%' }}>
             <TextField
               label="RT"
-              placeholder="RT"
+              placeholder="Masukkan sesuai domisili"
               name="rt"
               icon="🏘️"
               rules={validationRules.rt}
@@ -236,7 +240,7 @@ export function IdentitasMurid({
           <div style={{ flex: '1', width: '100%' }}>
             <TextField
               label="RW"
-              placeholder="RW"
+              placeholder="Masukkan sesuai domisili"
               name="rw"
               icon="🏘️"
               rules={validationRules.rw}
@@ -244,21 +248,21 @@ export function IdentitasMurid({
           </div>
         </div>
         <TextField
-          label="Nama Dusun (bila ada)"
+          label="Nama Dusun (bila ada, sesuai domisili)"
           placeholder="Masukkan Nama Dusun"
           name="dusun"
           icon="🌄"
           rules={validationRules.dusun}
         />
         <TextField
-          label="Kelurahan"
+          label="Kelurahan (sesuai domisili)"
           placeholder="Masukkan Kelurahan"
           name="desaKelurahan"
           icon="🏡"
           rules={validationRules.desaKelurahan}
         />
         <TextField
-          label="Kode Pos"
+          label="Kode Pos (sesuai domisili)"
           placeholder="Masukkan Kode Pos"
           name="kodePos"
           icon="✉️"
@@ -273,7 +277,8 @@ export function IdentitasMurid({
           }}
         >
           {showMap && (
-            <div style={{ padding: '10px 0px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', padding: '10px 0px' }}>
+              <p style={{marginBottom: '10px'}}>Ubah posisi marker(pin biru) ke lokasi tempat tinggal Anda</p>
               <LeafletMap
                 onSetPosition={(lat, lng) => {
                   setLintang(lat.toString());

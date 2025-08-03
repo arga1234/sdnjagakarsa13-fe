@@ -84,7 +84,6 @@ export function TextField({
                 onChange(e.target.value);
               }
             }}
-            disabled
             value={value}
             onBlur={handleBlur}
             maxLength={maxLength}

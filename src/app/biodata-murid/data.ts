@@ -3,6 +3,7 @@ export const tabMemo = {
   ayah: 'biodata-ayah',
   ibu: 'biodata-ibu',
   wali: 'biodata-wali',
-  kontak: 'kontak',
+  kontak: 'biodata-kontak',
+  periodik: 'periodik',
   dokumen: 'dokumen',
 };

@@ -113,7 +113,6 @@ export function IdentitasMurid({
           placeholder="Masukkan NISN"
           name="nisn"
           icon="🔢"
-          rules={validationRules.nisn}
         />
         <SelectField
           label="Kewarganegaraan"
@@ -277,8 +276,16 @@ export function IdentitasMurid({
           }}
         >
           {showMap && (
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '10px 0px' }}>
-              <p style={{marginBottom: '10px'}}>Ubah posisi marker(pin biru) ke lokasi tempat tinggal Anda</p>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '10px 0px',
+              }}
+            >
+              <p style={{ marginBottom: '10px' }}>
+                Ubah posisi marker(pin biru) ke lokasi tempat tinggal Anda
+              </p>
               <LeafletMap
                 onSetPosition={(lat, lng) => {
                   setLintang(lat.toString());

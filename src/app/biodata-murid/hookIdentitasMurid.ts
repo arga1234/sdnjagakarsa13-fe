@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { SiswaBodyDto } from '@/src/types';
+import { useEffect, useState } from 'react';
 
 export function useRegistrasiUlangHook() {
   const [agreed, setAgreed] = useState<boolean>(false);
@@ -37,6 +38,19 @@ export function useRegistrasiUlangHook() {
       },
     );
   };
+
+  useEffect(() => {
+    const x = localStorage.getItem('data-biodata-murid') || '';
+    if (x) {
+      const data: SiswaBodyDto = JSON.parse(x);
+      setPunyaKIPValue(data.punyaKIP || undefined);
+      if (data.punyaKIP === 'ya') {
+        setTetapMenerimaPIPValue(data.tetapMenerimaPIP || undefined);
+      } else {
+        setBerhakMenerimaPIPValue(data.berhakMenerimaPIP || undefined);
+      }
+    }
+  }, []);
 
   return {
     tetapMenerimaPIPValue,

@@ -1,58 +1,57 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IdentitasMurid } from './IdentitasMurid';
 import { IdentitasWali } from './IdentitasWali';
 import KontakForm from './Kontak';
 import UploadForm from './UploadForm';
 import { usePageHook } from './hookPage';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { tabMemo } from './data';
+import { LoadingComponent } from '@/src/components';
+import PeriodikForm from './DataPeriodik';
+import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
-  const { tab, setTab, rules, biodataMuridLocalData, handleSubmitForm } =
-    usePageHook();
-  // const { setTab } =
-  //   usePageHook();
-  const tabParam = useSearchParams().get('tab');
-  const router = useRouter();
-
-  useEffect(() => {
-    setTab(tabParam || tabMemo.murid);
-  }, [setTab, tabParam]);
+  const {
+    tab,
+    setTab,
+    rules,
+    biodataMuridLocalData,
+    handleSubmitForm,
+    loading,
+  } = usePageHook();
+  const isEdit = useSearchParams().get('edit') === 'true';
+  if (loading) return <LoadingComponent />;
 
   return (
     <div className="container">
+      {/* Identitas Murid */}
       <div style={{ display: tab === tabMemo.murid ? 'block' : 'none' }}>
         <IdentitasMurid
           formId={tabMemo.murid}
           validationRules={rules.murid}
-          nextButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.ayah}`);
-          }}
-          previousButton={function (): void {
-            router.push(`/`);
-          }}
+          nextButton={() => setTab(tabMemo.ayah)}
+          previousButton={() => setTab(tabMemo.murid)}
           handleSubmitForm={handleSubmitForm}
         />
       </div>
+
+      {/* Identitas Ayah Kandung */}
       <div style={{ display: tab === tabMemo.ayah ? 'block' : 'none' }}>
         <IdentitasWali
-          rules={rules.ayah}
           formId={tabMemo.ayah}
+          rules={rules.ayah}
           localStorageName={tabMemo.ayah}
           handleSubmitForm={handleSubmitForm}
           subTitle="Peserta didik"
-          wali={'Ayah Kandung'}
-          previousButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.murid}`);
-          }}
-          nextButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
-          }}
+          wali="Ayah Kandung"
+          previousButton={() => setTab(tabMemo.murid)}
+          nextButton={() => setTab(tabMemo.ibu)}
         />
       </div>
+
+      {/* Identitas Ibu Kandung */}
       <div style={{ display: tab === tabMemo.ibu ? 'block' : 'none' }}>
         <IdentitasWali
           formId={tabMemo.ibu}
@@ -60,63 +59,80 @@ export default function Page() {
           handleSubmitForm={handleSubmitForm}
           rules={rules.waliIbu}
           subTitle="Peserta didik"
-          wali={'Ibu Kandung'}
-          previousButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.ayah}`);
-          }}
-          nextButton={function (): void {
+          wali="Ibu Kandung"
+          previousButton={() => setTab(tabMemo.ayah)}
+          nextButton={() => {
             if (biodataMuridLocalData() === 'ya') {
-              router.push(`/biodata-murid?tab=${tabMemo.wali}`);
+              setTab(tabMemo.wali);
             } else {
-              router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
+              setTab(tabMemo.kontak);
             }
           }}
         />
       </div>
+
+      {/* Identitas Wali Murid */}
       <div style={{ display: tab === tabMemo.wali ? 'block' : 'none' }}>
         <IdentitasWali
           formId={tabMemo.wali}
           localStorageName={tabMemo.wali}
           handleSubmitForm={handleSubmitForm}
-          subTitle="Yang tinggal/mendampingi peserta didik"
-          wali={'Wali Murid'}
           rules={rules.wali}
-          nextButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
-          }}
-          previousButton={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
-          }}
-        ></IdentitasWali>
+          subTitle="Yang tinggal/mendampingi peserta didik"
+          wali="Wali Murid"
+          previousButton={() => setTab(tabMemo.ibu)}
+          nextButton={() => setTab(tabMemo.kontak)}
+        />
       </div>
+
+      {/* Kontak Form */}
       <div style={{ display: tab === tabMemo.kontak ? 'block' : 'none' }}>
         <KontakForm
           localStorageName={tabMemo.kontak}
           formId={tabMemo.kontak}
-          nextButtonOnClick={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.dokumen}`);
-          }}
-          prevButtonOnClick={function (): void {
+          rules={rules.kontak}
+          handleSubmitForm={handleSubmitForm}
+          prevButtonOnClick={() => {
             if (biodataMuridLocalData() === 'ya') {
-              router.push(`/biodata-murid?tab=${tabMemo.wali}`);
+              setTab(tabMemo.wali);
             } else {
-              router.push(`/biodata-murid?tab=${tabMemo.ibu}`);
+              setTab(tabMemo.ibu);
             }
           }}
-          rules={rules.kontak}
+          nextButtonOnClick={() => {
+            setTab(tabMemo.periodik);
+          }}
+        />
+      </div>
+
+      {/* Data Periodik */}
+      <div style={{ display: tab === tabMemo.periodik ? 'block' : 'none' }}>
+        <PeriodikForm
+          isEdit={isEdit}
+          localStorageName={tabMemo.periodik}
+          formId={tabMemo.periodik}
+          prevButtonOnClick={() => {
+            setTab(tabMemo.kontak)}}
+          nextButtonOnClick={() => {
+            if (!isEdit) {
+              setTab(tabMemo.dokumen);
+            }
+          }}
+          rules={rules.periodik}
           handleSubmitForm={handleSubmitForm}
         />
       </div>
+
+      {/* Upload Dokumen */}
       <div style={{ display: tab === tabMemo.dokumen ? 'block' : 'none' }}>
         <UploadForm
           handleSubmitForm={handleSubmitForm}
-          nextButtonOnClick={function (): void {}}
-          prevButtonOnClick={function (): void {
-            router.push(`/biodata-murid?tab=${tabMemo.kontak}`);
-          }}
           rules={rules.dokumen}
+          prevButtonOnClick={() => setTab(tabMemo.kontak)}
+          nextButtonOnClick={() => setTab(tabMemo.dokumen)}
         />
       </div>
+
       <style jsx>{`
         @keyframes backgroundShift {
           0% {
@@ -145,7 +161,3 @@ export default function Page() {
     </div>
   );
 }
-
-// export default function Page() {
-//   return <></>
-// }

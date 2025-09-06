@@ -61,10 +61,7 @@ export default function KontakForm({
         </h4>
         <p>Upload hasil scan dokumen peserta didik</p>
       </div>
-      <form
-        style={{ maxWidth: '800px', margin: '0 auto' }}
-        onSubmit={submit}
-      >
+      <form style={{ maxWidth: '800px', margin: '0 auto' }} onSubmit={submit}>
         <UploadField
           maxSizeMB={2}
           accept=".jpg,.jpeg,.png"
@@ -116,7 +113,7 @@ export default function KontakForm({
             Sebelumnya
           </button>
           <button
-          value={'submit'}
+            value={'submit'}
             onClick={nextButtonOnClick}
             style={{
               width: '100%',

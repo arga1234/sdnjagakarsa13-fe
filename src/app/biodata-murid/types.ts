@@ -1,7 +1,6 @@
 import { ValidationRule } from '@/src/util';
 export interface BiodataMuridValidation {
   nama: ValidationRule[];
-  nisn: ValidationRule[];
   kewarganegaraan: ValidationRule[];
   nik: ValidationRule[];
   kk: ValidationRule[];
@@ -39,7 +38,7 @@ type WaliIbuRules = {
   penghasilan: ValidationRule[];
 };
 
-type WaliAyah = WaliIbuRules
+type WaliAyah = WaliIbuRules;
 
 type Dokumen = {
   akteFile: ValidationRule[];
@@ -54,4 +53,9 @@ export type Rules = {
   ayah: WaliAyah;
   murid: BiodataMuridValidation;
   dokumen: Dokumen;
+  periodik: {
+    tinggiBadan: ValidationRule[];
+    beratBadan: ValidationRule[];
+    jumlahSaudara: ValidationRule[];
+  };
 };
